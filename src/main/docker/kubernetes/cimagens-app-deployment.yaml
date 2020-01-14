@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    service: cimagens-app
+  name: cimagens-app
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: cimagens-app
+    spec:
+      containers:
+      - image: cimagens
+        name: cimagens-app
+        resources: {}

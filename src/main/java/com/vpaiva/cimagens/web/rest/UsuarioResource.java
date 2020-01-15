@@ -30,47 +30,49 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/api/v1/usuario")
 public class UsuarioResource {
 
-	private final Logger log = LoggerFactory.getLogger(UsuarioResource.class);
-	
-	private UsuarioService usuarioService;
-	
-	public UsuarioResource(UsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
-	}
-	
-	@ApiOperation(value = "Gravar um usuário")
-	@PostMapping
-	public ResponseEntity<RestResult<String>> save(@NotEmpty @RequestBody UsuarioDTO usuario, BindingResult validationResult) {
-		log.debug("REST request to save Usuario : {}", usuario);
-		
-		if(validationResult.hasErrors()) {
-			List<String> erros = validationResult.getAllErrors().stream().map(erro -> erro.getDefaultMessage()).collect(Collectors.toList());
-			return ResponseEntity.badRequest().body(new RestResult<>(erros));
-		}
-		
-		String idUsuario = usuarioService.save(new Usuario(usuario.getNome()));
-		
-		return ResponseEntity.ok(new RestResult<>(idUsuario));
-	}
-	
-	@ApiOperation(value = "Buscar um usuário pelo id")
-	@GetMapping(path = "/{id}")
-	public ResponseEntity<RestResult<Usuario>> find(@PathVariable("id") String id) {
-		log.debug("REST request to find Usuario por id: {}", id);
-		
-		if(StringUtils.isEmpty(id)) {
-			List<String> erros = new ArrayList<String>();
-			erros.add("Id não pode ser vazio.");
-			return ResponseEntity.badRequest().body(new RestResult<>(erros));
-		}
-		
-		Optional<Usuario> usuario = usuarioService.find(id);
-		
-		if(!usuario.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(new RestResult<>(usuario.get()));
-		
-	}
+    private final Logger log = LoggerFactory.getLogger(UsuarioResource.class);
+
+    private UsuarioService usuarioService;
+
+    public UsuarioResource(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
+    @ApiOperation(value = "Gravar um usuário")
+    @PostMapping
+    public ResponseEntity<RestResult<String>> save(@NotEmpty @RequestBody UsuarioDTO usuario,
+            BindingResult validationResult) {
+        log.debug("REST request to save Usuario : {}", usuario);
+
+        if (validationResult.hasErrors()) {
+            List<String> erros = validationResult.getAllErrors().stream().map(erro -> erro.getDefaultMessage())
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(new RestResult<>(erros));
+        }
+
+        String idUsuario = usuarioService.save(new Usuario(usuario.getNome()));
+
+        return ResponseEntity.ok(new RestResult<>(idUsuario));
+    }
+
+    @ApiOperation(value = "Buscar um usuário pelo id")
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<RestResult<Usuario>> find(@PathVariable("id") String id) {
+        log.debug("REST request to find Usuario por id: {}", id);
+
+        if (StringUtils.isEmpty(id)) {
+            List<String> erros = new ArrayList<String>();
+            erros.add("Id não pode ser vazio.");
+            return ResponseEntity.badRequest().body(new RestResult<>(erros));
+        }
+
+        Optional<Usuario> usuario = usuarioService.find(id);
+
+        if (!usuario.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(new RestResult<>(usuario.get()));
+
+    }
 }

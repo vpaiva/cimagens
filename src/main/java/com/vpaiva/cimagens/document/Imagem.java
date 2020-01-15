@@ -8,103 +8,99 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Imagem {
 
-	@Id
-	private String id;
-	
-	private TipoImagem tipoImagem;
-	
-	private StatusUpload status;
+    @Id
+    private String id;
 
-	private Binary imagem;
-	
-	@DBRef
-	private Usuario usuario;
-	
-	public Imagem() {
-	}
-	
-	public Imagem(Usuario usuario) {
-		this.usuario = usuario;
-	}
-	
-	public Imagem(TipoImagem tipoImagem, Binary imagem, Usuario usuario) {
-		this.tipoImagem = tipoImagem;
-		this.imagem = imagem;
-		this.usuario = usuario;
-	}
+    private TipoImagem tipoImagem;
 
-	public Imagem(String id, TipoImagem tipoImagem, Binary imagem, Usuario usuario) {
-		this(tipoImagem, imagem, usuario);
-		this.id = id;
-	}
+    private StatusUpload status;
 
+    private Binary imagem;
 
+    @DBRef
+    private Usuario usuario;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+    public Imagem() {
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Imagem other = (Imagem) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
+    public Imagem(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public Imagem(TipoImagem tipoImagem, Binary imagem, Usuario usuario) {
+        this.tipoImagem = tipoImagem;
+        this.imagem = imagem;
+        this.usuario = usuario;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public Imagem(String id, TipoImagem tipoImagem, Binary imagem, Usuario usuario) {
+        this(tipoImagem, imagem, usuario);
+        this.id = id;
+    }
 
-	public TipoImagem getTipoImagem() {
-		return tipoImagem;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
 
-	public void setTipoImagem(TipoImagem tipoImagem) {
-		this.tipoImagem = tipoImagem;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Imagem other = (Imagem) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
 
-	public Binary getImagem() {
-		return imagem;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setImagem(Binary imagem) {
-		this.imagem = imagem;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
+    public TipoImagem getTipoImagem() {
+        return tipoImagem;
+    }
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+    public void setTipoImagem(TipoImagem tipoImagem) {
+        this.tipoImagem = tipoImagem;
+    }
 
-	public StatusUpload getStatus() {
-		return status;
-	}
+    public Binary getImagem() {
+        return imagem;
+    }
 
-	public void setStatus(StatusUpload status) {
-		this.status = status;
-	}
-	
-	
-	
+    public void setImagem(Binary imagem) {
+        this.imagem = imagem;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public StatusUpload getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusUpload status) {
+        this.status = status;
+    }
+
 }

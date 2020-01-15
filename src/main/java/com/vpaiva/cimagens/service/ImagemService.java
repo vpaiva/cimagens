@@ -10,15 +10,15 @@ import com.vpaiva.cimagens.document.Usuario;
 import com.vpaiva.cimagens.exception.TipoImagemNaoSuportado;
 
 public interface ImagemService {
-	
-	public Optional<Imagem> find(String id);
-	
-	public List<Imagem> listByUsuario(String idUsuario);
-	
-	public List<Imagem> listAll();
 
-	public String save(Usuario usuario, MultipartFile file) throws TipoImagemNaoSuportado;
+    public Optional<Imagem> find(String id);
 
-	public void delete(Imagem imagem);
+    public List<Imagem> listByUsuario(String idUsuario);
+
+    public List<Imagem> listAll();
+
+    public String save(Usuario usuario, MultipartFile file) throws TipoImagemNaoSuportado;
+
+    public void delete(Imagem imagem);
 
 }

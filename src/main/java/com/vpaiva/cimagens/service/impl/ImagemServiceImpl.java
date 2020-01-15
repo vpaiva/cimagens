@@ -21,56 +21,55 @@ import com.vpaiva.cimagens.service.ImagemUtils;
 @Service
 public class ImagemServiceImpl implements ImagemService {
 
-	private ImagemRepository imagemRepository;
-	
-	private ImagemUtils imagemUtils;
+    private ImagemRepository imagemRepository;
 
-	public ImagemServiceImpl(ImagemRepository imagemRepository, ImagemUtils imagemUtils) {
-		this.imagemRepository = imagemRepository;
-		this.imagemUtils = imagemUtils;
-	}
+    private ImagemUtils imagemUtils;
 
-	@Override
-	public Optional<Imagem> find(String id) {
-		return imagemRepository.findById(id);
-	}
+    public ImagemServiceImpl(ImagemRepository imagemRepository, ImagemUtils imagemUtils) {
+        this.imagemRepository = imagemRepository;
+        this.imagemUtils = imagemUtils;
+    }
 
-	@Override
-	public List<Imagem> listByUsuario(String idUsuario) {
-		return imagemRepository.findPorUsuario(idUsuario);
-	}
+    @Override
+    public Optional<Imagem> find(String id) {
+        return imagemRepository.findById(id);
+    }
 
-	@Override
-	public List<Imagem> listAll() {
-		return imagemRepository.findAll();
-	}
+    @Override
+    public List<Imagem> listByUsuario(String idUsuario) {
+        return imagemRepository.findPorUsuario(idUsuario);
+    }
 
-	@Override
-	public String save(Usuario usuario, MultipartFile file) throws TipoImagemNaoSuportado {
-		Imagem imagem = new Imagem(usuario);
-		imagem.setStatus(StatusUpload.EM_ANDAMENTO);
-		
-		Imagem savedImagem = imagemRepository.save(imagem);
-		
-		try {
-			TipoImagem tipoImagem = imagemUtils.getTipoArquivo(file);
-			Binary fileBinary = new Binary(BsonBinarySubType.BINARY, file.getBytes());
-			savedImagem.setTipoImagem(tipoImagem);
-			savedImagem.setStatus(StatusUpload.CONCLUIDO);			
-			savedImagem.setImagem(fileBinary);
-		} catch (IOException e) {
-			savedImagem.setStatus(StatusUpload.FALHA);
-		}
-		
-		savedImagem = imagemRepository.save(savedImagem);
-		
-		return savedImagem.getId();
-	}
+    @Override
+    public List<Imagem> listAll() {
+        return imagemRepository.findAll();
+    }
 
-	@Override
-	public void delete(Imagem imagem) {
-		imagemRepository.delete(imagem);
-	}
-	
+    @Override
+    public String save(Usuario usuario, MultipartFile file) throws TipoImagemNaoSuportado {
+        Imagem imagem = new Imagem(usuario);
+        imagem.setStatus(StatusUpload.EM_ANDAMENTO);
+
+        Imagem savedImagem = imagemRepository.save(imagem);
+
+        try {
+            TipoImagem tipoImagem = imagemUtils.getTipoArquivo(file);
+            Binary fileBinary = new Binary(BsonBinarySubType.BINARY, file.getBytes());
+            savedImagem.setTipoImagem(tipoImagem);
+            savedImagem.setStatus(StatusUpload.CONCLUIDO);
+            savedImagem.setImagem(fileBinary);
+        } catch (IOException e) {
+            savedImagem.setStatus(StatusUpload.FALHA);
+        }
+
+        savedImagem = imagemRepository.save(savedImagem);
+
+        return savedImagem.getId();
+    }
+
+    @Override
+    public void delete(Imagem imagem) {
+        imagemRepository.delete(imagem);
+    }
 
 }

@@ -16,30 +16,22 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig extends WebMvcConfigurationSupport {
 
-  @Bean
-  public Docket greetingApi() {
-    return new Docket(DocumentationType.SWAGGER_2)
-        .select()
-        .apis(RequestHandlerSelectors.basePackage("com.vpaiva.cimagens"))
-        .build()
-        .apiInfo(metaData());
+    @Bean
+    public Docket greetingApi() {
+        return new Docket(DocumentationType.SWAGGER_2).select()
+                .apis(RequestHandlerSelectors.basePackage("com.vpaiva.cimagens")).build().apiInfo(metaData());
 
-  }
+    }
 
-  private ApiInfo metaData() {
-    return new ApiInfoBuilder()
-        .title("CImagens")
-        .description("\"CImagens REST API para upload de imagens\"")
-        .version("1.0.0")
-        .build();
-  }
+    private ApiInfo metaData() {
+        return new ApiInfoBuilder().title("CImagens").description("\"CImagens REST API para upload de imagens\"")
+                .version("1.0.0").build();
+    }
 
-  @Override
-  protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("swagger-ui.html")
-        .addResourceLocations("classpath:/META-INF/resources/");
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
 
-    registry.addResourceHandler("/webjars/**")
-        .addResourceLocations("classpath:/META-INF/resources/webjars/");
-  }
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
 }

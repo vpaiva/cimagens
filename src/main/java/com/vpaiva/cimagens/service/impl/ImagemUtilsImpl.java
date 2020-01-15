@@ -16,20 +16,20 @@ import com.vpaiva.cimagens.service.ImagemUtils;
 
 @Service
 public class ImagemUtilsImpl implements ImagemUtils {
-	
-	public TipoImagem getTipoArquivo(MultipartFile file) throws TipoImagemNaoSuportado, IOException {
-		InputStream is = new BufferedInputStream(new ByteArrayInputStream(file.getBytes()));
-		
-		String mimeType = URLConnection.guessContentTypeFromStream(is);
-		
-		is.close();
 
-		TipoImagem tipoImagem = TipoImagem.getImagem(mimeType);
-		
-		if(Objects.isNull(tipoImagem)) {
-			throw new TipoImagemNaoSuportado();
-		}
-		
-		return tipoImagem;
-	}
+    public TipoImagem getTipoArquivo(MultipartFile file) throws TipoImagemNaoSuportado, IOException {
+        InputStream is = new BufferedInputStream(new ByteArrayInputStream(file.getBytes()));
+
+        String mimeType = URLConnection.guessContentTypeFromStream(is);
+
+        is.close();
+
+        TipoImagem tipoImagem = TipoImagem.getImagem(mimeType);
+
+        if (Objects.isNull(tipoImagem)) {
+            throw new TipoImagemNaoSuportado();
+        }
+
+        return tipoImagem;
+    }
 }

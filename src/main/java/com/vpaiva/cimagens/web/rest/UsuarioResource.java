@@ -9,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vpaiva.cimagens.document.Usuario;
@@ -25,6 +27,8 @@ import com.vpaiva.cimagens.web.rest.dto.UsuarioDTO;
 import com.vpaiva.cimagens.web.rest.result.RestResult;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api/v1/usuario")
@@ -38,7 +42,12 @@ public class UsuarioResource {
         this.usuarioService = usuarioService;
     }
 
-    @ApiOperation(value = "Gravar um usuário")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Gravar um usuário", notes = "Gravar um usuário", response = UsuarioDTO.class)
+    @ApiResponses({
+        @ApiResponse(code = 201, message = "Usuário inserido com sucesso"),
+        @ApiResponse(code = 400, message = "Dados de usuário inválidos na requisição")
+    })
     @PostMapping
     public ResponseEntity<RestResult<String>> save(@NotEmpty @RequestBody UsuarioDTO usuario,
             BindingResult validationResult) {
@@ -52,7 +61,7 @@ public class UsuarioResource {
 
         String idUsuario = usuarioService.save(new Usuario(usuario.getNome()));
 
-        return ResponseEntity.ok(new RestResult<>(idUsuario));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new RestResult<>(idUsuario));
     }
 
     @ApiOperation(value = "Buscar um usuário pelo id")
